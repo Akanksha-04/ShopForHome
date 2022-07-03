@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 const signup = async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password,isadmin } = req.body;
     // Check values are not empty
     if (!name || !email || !password) {
         res.status(400).json({ msg: "Please enter all fields" });
@@ -13,7 +13,7 @@ const signup = async (req, res) => {
         if (users) return res.status(400).json({ msg: "User already exists" });
     });
     // create user
-    const user = new User({ name, email, password });
+    const user = new User({ name, email, password,isadmin });
     // Encrypt password
     try {
         const salt = await bcrypt.genSalt(10);

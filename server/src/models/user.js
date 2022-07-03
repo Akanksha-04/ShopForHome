@@ -20,6 +20,9 @@ const userSchema = new mongoose.Schema({
     required: [true, "please enter an email"],
     minlength: [6, "Minimum password length must be 6 characters"],
   },
+  isadmin: {
+    type: Boolean,
+  },
   register_date: {
     type: Date,
     default: Date.now,
