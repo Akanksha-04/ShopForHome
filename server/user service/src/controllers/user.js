@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 const signup = async (req, res) => {
-    const { name, email, password,isadmin } = req.body;
+    const { name, email, password, isadmin } = req.body;
     // Check values are not empty
     if (!name || !email || !password) {
         res.status(400).json({ msg: "Please enter all fields" });
@@ -13,7 +13,7 @@ const signup = async (req, res) => {
         if (users) return res.status(400).json({ msg: "User already exists" });
     });
     // create user
-    const user = new User({ name, email, password,isadmin });
+    const user = new User({ name, email, password, isadmin });
     // Encrypt password
     try {
         const salt = await bcrypt.genSalt(10);
@@ -46,6 +46,7 @@ const login = async (req, res) => {
             id: user._id,
             name: user.name,
             email: user.email,
+            isadmin: user.isadmin
         };           // Sign token
         jwt.sign(
             payload,
@@ -53,7 +54,9 @@ const login = async (req, res) => {
             { expiresIn: 3600 },
             (err, token) => {
                 if (err) throw err;
-                res.json({
+                // res.headers.token = token;
+                // res.setHeader('token',token)
+                res.status(200).send({
                     token,
                     user: payload,
                 });
@@ -64,4 +67,4 @@ const login = async (req, res) => {
 
 
 
-export { signup,login }
+export { signup, login }
