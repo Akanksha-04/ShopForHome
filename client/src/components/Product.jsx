@@ -70,7 +70,6 @@ const Product = ({ item }) => {
     <Container>
       <Circle />
       <Image src={`/product/uploads/${item.img}`} />
-      {console.log(item)}
       <Info>
         <Icon>
           <ShoppingCartOutlined />

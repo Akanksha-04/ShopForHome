@@ -16,6 +16,7 @@ const App = () => {
           <Route path="/product/:userID" element={<Product />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/catgorieslist/:CategorieID" element={<ProductList />} />
         </Routes>
       </Router>
     </div>
