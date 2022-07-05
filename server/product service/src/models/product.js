@@ -6,7 +6,7 @@ const productSchema = new Schema({
         type: String,
     },
     img: {
-        type : String,
+        type: String,
     },
     description: {
         type: String,
@@ -15,10 +15,10 @@ const productSchema = new Schema({
         type: String,
     },
     price: {
-        type:String,
+        type: Number,
     },
     stock: {
-        type:String,
+        type: Number,
 
     },
     date_added: {

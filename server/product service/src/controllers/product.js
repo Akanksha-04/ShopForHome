@@ -21,7 +21,7 @@ const post_product = async (req, res) => {
     console.log(req.body)
 
     var obj = {
-        title: req.body.name,
+        title: req.body.title,
         description: req.body.description,
         category: req.body.category,
         price: req.body.price,
