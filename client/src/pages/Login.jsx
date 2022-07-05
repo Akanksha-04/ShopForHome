@@ -1,5 +1,8 @@
 import styled from "styled-components";
 import {mobile} from "../responsive";
+import axios from "axios";
+import {useState} from "react";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   width: 100vw;
@@ -58,14 +61,37 @@ const Link = styled.a`
 `;
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  let navigate = useNavigate();
+
+  const HandleSubmit = (e) => {
+    e.preventDefault();
+    console.log( email, password);
+
+    axios
+      .post("/user/login", {
+        email,
+        password,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    navigate("/");
+  };
+
+
   return (
     <Container>
       <Wrapper>
         <Title>SIGN IN</Title>
         <Form>
-          <Input placeholder="username" />
-          <Input placeholder="password" />
-          <Button>LOGIN</Button>
+          <Input placeholder="Email"  onChange={(e) => setEmail(e.target.value)} />
+          <Input placeholder="Password"  onChange={(e) => setPassword(e.target.value)} />
+          <Button onClick={HandleSubmit}>LOGIN</Button>
           <Link>FORGOT PASSWORD?</Link>
           <Link>CREATE A NEW ACCOUNT</Link>
         </Form>

@@ -1,5 +1,8 @@
 import styled from "styled-components";
 import { mobile } from "../responsive";
+import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   width: 100vw;
@@ -55,22 +58,70 @@ const Button = styled.button`
 `;
 
 const Register = () => {
+  const [name, setName] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  let navigate = useNavigate();
+
+  const HandleSubmit = (e) => {
+    e.preventDefault();
+    console.log(name, lastname, username, email, password, passwordConfirm);
+
+    axios
+      .post("/user/singup", {
+        name,
+        lastname,
+        username,
+        email,
+        password,
+        passwordConfirm,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    navigate("/login");
+  };
+
   return (
     <Container>
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
         <Form>
-          <Input placeholder="name" />
-          <Input placeholder="last name" />
-          <Input placeholder="username" />
-          <Input placeholder="email" />
-          <Input placeholder="password" />
-          <Input placeholder="confirm password" />
+          <Input placeholder="name" onChange={(e) => setName(e.target.value)} />
+          <Input
+            placeholder="last name"
+            onChange={(e) => setLastname(e.target.value)}
+          />
+          <Input
+            placeholder="username"
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Input
+            placeholder="email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Input
+            placeholder="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Input
+            placeholder="confirm password"
+            onChange={(e) => setPasswordConfirm(e.target.value)}
+          />
           <Agreement>
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>
           </Agreement>
-          <Button>CREATE</Button>
+
+          <Button type="sumbit" onClick={HandleSubmit}>
+            CREATE
+          </Button>
         </Form>
       </Wrapper>
     </Container>

@@ -12,23 +12,25 @@ const Container = styled.div`
   justify-content: space-between;
 `;
 
-// const API_URL = "http://localhost:5000/products";
+const API_URL = "/product/all";
 
 const Products = () => {
-  // const [products, setProducts] = useState([]);
-  // const fetchData = async () => {
-  //   const { data } = await axios.get(API_URL);
-  //   setPproducts(data);
-  // };
+  const [allproducts, setAllProducts] = useState([]);
+  const fetchData = async () => {
+    const { data } = await axios.get(API_URL);
+    setAllProducts(data);
+  };
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  console.log(allproducts);
 
   return (
     <Container>
-      {popularProducts.map((item) => (
-        <Link to="/product">
+      {allproducts.map((item) => (
+        <Link to={`/product/${item._id}`}>
           <Product item={item} key={item.id} />
         </Link>
       ))}

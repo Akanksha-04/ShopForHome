@@ -5,13 +5,16 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
 import { mobile } from "../responsive";
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const Container = styled.div``;
 
 const Wrapper = styled.div`
   padding: 50px;
   display: flex;
-  ${mobile({ padding: "10px", flexDirection:"column" })}
+  ${mobile({ padding: "10px", flexDirection: "column" })}
 `;
 
 const ImgContainer = styled.div`
@@ -109,30 +112,43 @@ const Button = styled.button`
   background-color: white;
   cursor: pointer;
   font-weight: 500;
-  &:hover{
-      background-color: #f8f4f4;
+  &:hover {
+    background-color: #f8f4f4;
   }
 `;
 
 const Product = () => {
+  const params = useParams();
+
+  const { userID } = params;
+  console.log(userID);
+
+  const API_URL = `/product/item/${userID}`;
+
+  const [item, setItem] = useState([]);
+  const fetchData = async () => {
+    const { data } = await axios.get(API_URL);
+    setItem(data);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  console.log(item);
+
   return (
     <Container>
       <Navbar />
       <Announcements />
       <Wrapper>
         <ImgContainer>
-          <Image src="https://ii2.pepperfry.com/media/catalog/product/v/i/494x544/victoria-king-size-bed-with-hydraulic-storage-in-gloss-finish-by-a-globia-creations-victoria-king-si-7uafer.jpg" />
+          <Image src={`/product/uploads/${item.img}`} />
         </ImgContainer>
         <InfoContainer>
-          <Title>King Size Bed</Title>
-          <Desc>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-            venenatis, dolor in finibus malesuada, lectus ipsum porta nunc, at
-            iaculis arcu nisi sed mauris. Nulla fermentum vestibulum ex, eget
-            tristique tortor pretium ut. Curabitur elit justo, consequat id
-            condimentum ac, volutpat ornare.
-          </Desc>
-          <Price>Rs.40000</Price>
+          <Title>{item.title}</Title>
+          <Desc>{item.description}.</Desc>
+          <Price>Rs.{item.price}</Price>
           {/* <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>

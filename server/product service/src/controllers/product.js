@@ -1,6 +1,7 @@
 import Product from "../models/product.js";
 import csvtojson from 'csvtojson';
 import path from 'path'
+import fs from 'fs'
 
 
 // Get all products
@@ -17,9 +18,22 @@ const get_product = async (req, res) => {
 
 //  Add a new product
 const post_product = async (req, res) => {
-    const newproduct = new Product(req.body);
-    const product = await newproduct.save();
-    res.json(product);
+    console.log(req.body)
+
+    var obj = {
+        title: req.body.name,
+        description: req.body.description,
+        category: req.body.category,
+        price: req.body.price,
+        stock: req.body.stock,
+        img: req.file.filename, 
+    }
+    Product.create(obj).then(() => {
+        res.json({ message: 'Product added successfully' });
+    }
+    ).catch(err => {
+        res.json({ message: err });
+    });
 };
 
 // Update a product
@@ -61,7 +75,6 @@ const bulk_upload = async (req, res) => {
         console.log(err);
     });
 }
-
 
 
 // Export all functions
