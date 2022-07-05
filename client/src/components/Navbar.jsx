@@ -1,5 +1,5 @@
 import { Badge } from "@material-ui/core";
-import { Search, ShoppingCartOutlined } from "@material-ui/icons";
+import { Search, ShoppingCartOutlined, FavoriteBorder, AccountCircle } from "@material-ui/icons";
 import React from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
@@ -70,6 +70,12 @@ const Language = styled.span`
   ${mobile({ display: "none" })}
 `;
 
+const ContainerHidden = styled.div`
+display: flex;
+flex-direction: row;
+display: none;
+`;
+
 const Navbar = () => {
   return (
     /* style container/component in place of div */
@@ -88,6 +94,24 @@ const Navbar = () => {
           </Link>
         </Center>
         <Right>
+        <ContainerHidden>
+          <MenuItem>
+            <Button>                    
+              <AccountCircle/>
+            </Button>
+          </MenuItem>
+          <MenuItem>
+            <Button>                    
+              <FavoriteBorder/>
+            </Button>
+          </MenuItem>
+          <MenuItem>
+            <Button>ORDERS</Button>
+          </MenuItem>
+          <MenuItem>
+            <Button>LOG OUT</Button>
+          </MenuItem>
+          </ContainerHidden>
           <Link to="/register">
             <MenuItem>REGISTER</MenuItem>
           </Link>
