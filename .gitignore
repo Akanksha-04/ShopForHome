@@ -6,6 +6,9 @@ server/api gateway/node_modules
 server/product service/node_modules
 server/user service/node_modules
 server/discount service/node_modules
+admin/node_modules/
+
+
 /node_modules
 /.pnp
 .pnp.js

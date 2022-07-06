@@ -18,7 +18,7 @@ function App() {
       <div className="container">
         <Sidebar />
         <Switch>
-          <Route exact path="/">
+          <Route exact path="/home">
             <Home />
           </Route>
           <Route path="/users">
@@ -39,7 +39,7 @@ function App() {
           <Route path="/newproduct">
             <NewProduct />
           </Route>
-          <Route path="/login">
+          <Route path="/">
             <Login />
           </Route>
         </Switch>
