@@ -119,6 +119,7 @@ export const userData = [
       img:
         "https://ii2.pepperfry.com/media/catalog/product/l/i/494x544/linden-4-door-wardrobe-with-mirror-in-wenge-finish-by-spacewood-linden-4-door-wardrobe-with-mirror-i-8j3hhw.jpg",
       stock: 10,
+      category: "Home",
       status: "active",
       price: "Rs 12000.00",
     },
@@ -128,6 +129,7 @@ export const userData = [
       img:
         "https://ii2.pepperfry.com/media/catalog/product/m/a/494x544/magna-1-seater-recliner-in-dark-brown-colour-by-recliners-india-magna-1-seater-recliner-in-dark-brow-bjvapt.jpg",
       stock: 15,
+      category: "Bed",
       status: "active",
       price: "Rs 10000.00",
     },
