@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import {mobile} from "../responsive";
+import { mobile } from "../responsive";
 import axios from "axios";
-import {useState} from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
@@ -67,7 +67,7 @@ const Login = () => {
 
   const HandleSubmit = (e) => {
     e.preventDefault();
-    console.log( email, password);
+    console.log(email, password);
 
     axios
       .post("/user/login", {
@@ -76,21 +76,36 @@ const Login = () => {
       })
       .then((res) => {
         console.log(res);
+        const { token, user } = res.data;
+        console.log(token, user);
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("userID", user.email);
+        navigate("/");
       })
       .catch((err) => {
+        setEmail("");
+        setPassword("");
+        alert("Invalid email or password");
         console.log(err);
       });
-    navigate("/");
   };
-
 
   return (
     <Container>
       <Wrapper>
         <Title>SIGN IN</Title>
         <Form>
-          <Input placeholder="Email"  onChange={(e) => setEmail(e.target.value)} />
-          <Input placeholder="Password"  onChange={(e) => setPassword(e.target.value)} />
+          <Input
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Input
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
           <Button onClick={HandleSubmit}>LOGIN</Button>
           <Link>FORGOT PASSWORD?</Link>
           <Link>CREATE A NEW ACCOUNT</Link>

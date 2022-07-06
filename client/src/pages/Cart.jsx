@@ -1,17 +1,20 @@
 import { Add, Remove } from "@material-ui/icons";
 import styled from "styled-components";
 import Announcements from "../components/Announcements";
+import Cartitem from "../components/Cartitem";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
-
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Container = styled.div``;
 
 const Wrapper = styled.div`
   padding: 20px;
   ${mobile({ padding: "10px" })}
-  `;
+`;
 
 const Title = styled.h1`
   font-weight: 300;
@@ -36,7 +39,7 @@ const TopButton = styled.button`
 `;
 
 const TopTexts = styled.div`
-   ${mobile({ display: "none" })}
+  ${mobile({ display: "none" })}
 `;
 const TopText = styled.span`
   text-decoration: underline;
@@ -154,6 +157,24 @@ const Button = styled.button`
 `;
 
 const Cart = () => {
+  const API_URL = `/product/cart/${localStorage.getItem("userID")}`;
+
+  const [cartdetails, setCartdetails] = useState();
+
+  axios
+    .get(API_URL)
+    .then(function (response) {
+      // handle success
+      setCartdetails(response.data);
+      console.log(response);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    });
+
+  console.log(cartdetails);
+
   return (
     <Container>
       <Navbar />
@@ -169,59 +190,8 @@ const Cart = () => {
           <TopButton type="filled">CHECKOUT NOW</TopButton>
         </Top>
         <Bottom>
-          <Info>
-            <Product>
-              <ProductDetail>
-                <Image src="https://ii3.pepperfry.com/media/catalog/product/o/r/494x544/orange-and-yellow-plastic-artificial-plant-with-metal-holder--set-of-2-by-foliyaj-orange-and-yellow--xjfliy.jpg" />
-                <Details>
-                  <ProductName>
-                    <b>Product:</b> PLASTIC ARTIFICIAL PLANT
-                  </ProductName>
-                  <ProductId>
-                    <b>ID:</b> 93813718293
-                  </ProductId>
-                  {/* <ProductColor color="black" /> */}
-                  {/* <ProductSize>
-                    <b>Size:</b> 37.5
-                  </ProductSize> */}
-                </Details>
-              </ProductDetail>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <Add />
-                  <ProductAmount>2</ProductAmount>
-                  <Remove />
-                </ProductAmountContainer>
-                <ProductPrice>rS.650</ProductPrice>
-              </PriceDetail>
-            </Product>
-            <Hr />
-            <Product>
-              <ProductDetail>
-                <Image src="https://ii2.pepperfry.com/media/catalog/product/v/i/494x544/victoria-king-size-bed-with-hydraulic-storage-in-gloss-finish-by-a-globia-creations-victoria-king-si-7uafer.jpg" />
-                <Details>
-                  <ProductName>
-                    <b>Product:</b> VICTORIA KING SIZE BED
-                  </ProductName>
-                  <ProductId>
-                    <b>ID:</b> 93813718293
-                  </ProductId>
-                  {/* <ProductColor color="gray" />
-                  <ProductSize>
-                    <b>Size:</b> M
-                  </ProductSize> */}
-                </Details>
-              </ProductDetail>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <Add />
-                  <ProductAmount>1</ProductAmount>
-                  <Remove />
-                </ProductAmountContainer>
-                <ProductPrice>Rs.40000</ProductPrice>
-              </PriceDetail>
-            </Product>
-          </Info>
+       
+
           <Summary>
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>

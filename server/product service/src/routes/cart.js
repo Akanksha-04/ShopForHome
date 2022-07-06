@@ -7,8 +7,8 @@ import {
 
 const router = express.Router();
 
-router.get("/cart/:id", get_cart_items);
-router.post("/cart/:id", add_cart_item);
+router.get("/cart/:userId", get_cart_items);
+router.post("/cart/:userId", add_cart_item);
 router.delete("/cart/:userId/:itemId", delete_item);
 
 export default router;

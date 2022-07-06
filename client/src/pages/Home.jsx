@@ -8,7 +8,7 @@ import Newsletter from "../components/Newsletter";
 import Footer from "../components/Footer";
 
 const Home = () => {
-  var im = "1.png";
+
   return (
     <div>
       <Announcements />

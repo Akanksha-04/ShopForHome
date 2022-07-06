@@ -2,7 +2,7 @@ import Cart from "../models/cart.js";
 import Product from "../models/product.js";
 
 const get_cart_items = async (req, res) => {
-  const userId = req.params.id;
+  const userId = req.params.userId;
   try {
     let cart = await Cart.findOne({ userId });
     if (cart && cart.items.length > 0) {
@@ -17,7 +17,7 @@ const get_cart_items = async (req, res) => {
 };
 
 const add_cart_item = async (req, res) => {
-  const userId = req.params.id;
+  const userId = req.params.userId;
   const { productId, quantity } = req.body;
 
   try {
@@ -31,7 +31,7 @@ const add_cart_item = async (req, res) => {
 
     if (cart) {
       // if cart exists for the user
-      let itemIndex =await cart.items.findIndex((p) => p.productId == productId);
+      let itemIndex = await cart.items.findIndex((p) => p.productId == productId);
 
       // Check if product exists or not
       if (itemIndex > -1) {

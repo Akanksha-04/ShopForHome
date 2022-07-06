@@ -16,26 +16,34 @@ const Container = styled.div`
 const API_URL = "/product/all";
 
 const Products = () => {
-  const params = useParams();
+  // const params = useParams();
 
-  const { CategorieID } = params;
-  console.log(CategorieID);
+  // const { CategorieID } = params;
+  // console.log(CategorieID);
 
   const [allproducts, setAllProducts] = useState([]);
-  const fetchData = async () => {
-    const { data } = await axios.get(API_URL);
-    setAllProducts(data);
-  };
+//   const fetchData = async () => {
+//     const { data } = await axios.get(API_URL);
+//     setAllProducts(data);
+//   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+//   useEffect(() => {
+//     fetchData();
+//   }, []);
 
-  console.log(allproducts);
+  axios
+  .get(API_URL)
+  .then(function (response) {
+    // handle success
+    setAllProducts(response.data);
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  });
 
   return (
     <Container>
-      {CategorieID}
       {allproducts.map((item) => (
         <Link to={`/product/${item._id}`}>
           <Product item={item} key={item.id} />

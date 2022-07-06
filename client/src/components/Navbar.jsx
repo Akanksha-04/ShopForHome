@@ -1,9 +1,15 @@
 import { Badge } from "@material-ui/core";
-import { Search, ShoppingCartOutlined, FavoriteBorder, AccountCircle } from "@material-ui/icons";
+import {
+  Search,
+  ShoppingCartOutlined,
+  FavoriteBorder,
+  AccountCircle,
+} from "@material-ui/icons";
 import React from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 // here we are creating our own styled components and for that we have to install a library using command "npm i styled-components"
 const Container = styled.div`
@@ -70,13 +76,33 @@ const Language = styled.span`
   ${mobile({ display: "none" })}
 `;
 
-const ContainerHidden = styled.div`
-display: flex;
-flex-direction: row;
-display: none;
+const LogoutHidden = styled.div`
+  display: flex;
+`;
+
+const LoginHidden = styled.div`
+  display: flex;
+`;
+
+const Button = styled.button`
+  border: none;
+  padding: 15px 20px;
+  background-color: white;
+  border-radius: 5px;
 `;
 
 const Navbar = () => {
+  const [uobj, setUobj] = useState(true);
+
+  const logout = () => {
+    localStorage.clear();
+  };
+
+  // useEffect(() => {
+  //   let newObj = localStorage.getItem("user");
+  //   setUobj(JSON.parse(newObj));
+  // }, [uobj]);
+
   return (
     /* style container/component in place of div */
     <Container>
@@ -94,35 +120,42 @@ const Navbar = () => {
           </Link>
         </Center>
         <Right>
-        <ContainerHidden>
-          <MenuItem>
-            <Button>                    
-              <AccountCircle/>
-            </Button>
-          </MenuItem>
-          <MenuItem>
-            <Button>                    
-              <FavoriteBorder/>
-            </Button>
-          </MenuItem>
-          <MenuItem>
-            <Button>ORDERS</Button>
-          </MenuItem>
-          <MenuItem>
-            <Button>LOG OUT</Button>
-          </MenuItem>
-          </ContainerHidden>
-          <Link to="/register">
-            <MenuItem>REGISTER</MenuItem>
+          <Link to="/cart">
+            <MenuItem>
+              <Badge badgeContent={4} color="primary">
+                <ShoppingCartOutlined />
+              </Badge>
+            </MenuItem>
           </Link>
-          <Link to="/login">
-            <MenuItem>SIGN IN</MenuItem>
-          </Link>
-          <MenuItem>
-            <Badge badgeContent={4} color="primary">
-              <ShoppingCartOutlined />
-            </Badge>
-          </MenuItem>
+          {uobj ? (
+            <LogoutHidden>
+              {/* <MenuItem>
+                <Button>
+                  <AccountCircle />
+                </Button>
+              </MenuItem> */}
+              <MenuItem>
+                <Button>
+                  <FavoriteBorder />
+                </Button>
+              </MenuItem>
+              <MenuItem>
+                <Button>ORDERS</Button>
+              </MenuItem>
+              <MenuItem>
+                <Button onClick={logout}>LOG OUT</Button>
+              </MenuItem>
+            </LogoutHidden>
+          ) : (
+            <LoginHidden>
+              <Link to="/register">
+                <MenuItem>REGISTER</MenuItem>
+              </Link>
+              <Link to="/login">
+                <MenuItem>SIGN IN</MenuItem>
+              </Link>
+            </LoginHidden>
+          )}
         </Right>
       </Wrapper>
     </Container>
