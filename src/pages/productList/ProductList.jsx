@@ -28,6 +28,7 @@ export default function ProductList() {
       },
     },
     { field: "stock", headerName: "Stock", width: 200 },
+      { field: "category", headerName: "Category", width: 200}
     {
       field: "status",
       headerName: "Status",
