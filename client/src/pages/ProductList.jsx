@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import Announcements from "../components/Announcements";
@@ -7,6 +7,8 @@ import Newsletter from "../components/Newsletter";
 import Footer from "../components/Footer";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
 
 const Container = styled.div``;
 
@@ -41,6 +43,7 @@ const Select = styled.select`
 const Option = styled.option``;
 
 const ProductList = () => {
+
   return (
     <Container>
       <Navbar />

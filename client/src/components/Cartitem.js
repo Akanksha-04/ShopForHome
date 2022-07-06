@@ -82,19 +82,15 @@ function Cartitem({ item }) {
               <b>Product:</b> {item.name}
             </ProductName>
             <ProductId>
-              <b>ID:</b> {item.id}
+              <b>ID:</b> {item.productId}
             </ProductId>
-            {/* <ProductColor color="gray" />
-                  <ProductSize>
-                    <b>Size:</b> M
-                  </ProductSize> */}
           </Details>
         </ProductDetail>
         <PriceDetail>
           <ProductAmountContainer>
-            <Add />
-            <ProductAmount>{item.quantity}</ProductAmount>
             <Remove />
+            <ProductAmount>{item.quantity}</ProductAmount>
+            <Add />
           </ProductAmountContainer>
           <ProductPrice>Rs.{item.price}</ProductPrice>
         </PriceDetail>

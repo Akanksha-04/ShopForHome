@@ -119,23 +119,20 @@ const Button = styled.button`
 
 const Product = () => {
   const params = useParams();
-
   const { userID } = params;
-  console.log(userID);
-
-  const API_URL = `/product/item/${userID}`;
-
-  const [item, setItem] = useState([]);
-  const fetchData = async () => {
-    const { data } = await axios.get(API_URL);
-    setItem(data);
-  };
+  const [item, setItem] = useState({});
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`/product/item/${userID}`);
+        setItem(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
     fetchData();
-  }, []);
-
-  console.log(item);
+  }, [userID]);
 
   return (
     <Container>
@@ -147,8 +144,8 @@ const Product = () => {
         </ImgContainer>
         <InfoContainer>
           <Title>{item.title}</Title>
-          <Desc>{item.description}.</Desc>
-          <Price>Rs.{item.price}</Price>
+          <Desc>{item.description}</Desc>
+          <Price>{item.price}</Price>
           {/* <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>

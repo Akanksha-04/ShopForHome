@@ -92,17 +92,6 @@ const Button = styled.button`
 `;
 
 const Navbar = () => {
-  const [uobj, setUobj] = useState(true);
-
-  const logout = () => {
-    localStorage.clear();
-  };
-
-  // useEffect(() => {
-  //   let newObj = localStorage.getItem("user");
-  //   setUobj(JSON.parse(newObj));
-  // }, [uobj]);
-
   return (
     /* style container/component in place of div */
     <Container>
@@ -127,35 +116,28 @@ const Navbar = () => {
               </Badge>
             </MenuItem>
           </Link>
-          {uobj ? (
-            <LogoutHidden>
-              {/* <MenuItem>
-                <Button>
-                  <AccountCircle />
-                </Button>
-              </MenuItem> */}
-              <MenuItem>
-                <Button>
-                  <FavoriteBorder />
-                </Button>
-              </MenuItem>
-              <MenuItem>
-                <Button>ORDERS</Button>
-              </MenuItem>
-              <MenuItem>
-                <Button onClick={logout}>LOG OUT</Button>
-              </MenuItem>
-            </LogoutHidden>
-          ) : (
-            <LoginHidden>
-              <Link to="/register">
-                <MenuItem>REGISTER</MenuItem>
-              </Link>
-              <Link to="/login">
-                <MenuItem>SIGN IN</MenuItem>
-              </Link>
-            </LoginHidden>
-          )}
+          <LogoutHidden>
+            <MenuItem>
+              <Button>
+                <FavoriteBorder />
+              </Button>
+            </MenuItem>
+            <MenuItem>
+              <Button>ORDERS</Button>
+            </MenuItem>
+            <MenuItem>
+              <Button>LOG OUT</Button>
+            </MenuItem>
+          </LogoutHidden>
+          <LoginHidden>
+            <Link to="/register">
+              <MenuItem>REGISTER</MenuItem>
+            </Link>
+            <Link to="/login">
+              <MenuItem>SIGN IN</MenuItem>
+            </Link>
+          </LoginHidden>
+          )
         </Right>
       </Wrapper>
     </Container>

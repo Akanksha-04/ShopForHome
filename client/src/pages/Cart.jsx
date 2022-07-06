@@ -157,23 +157,20 @@ const Button = styled.button`
 `;
 
 const Cart = () => {
-  const API_URL = `/product/cart/${localStorage.getItem("userID")}`;
+  const [cartdetails, setCartDetails] = useState([]);
+  const userID = localStorage.getItem("userID");
 
-  const [cartdetails, setCartdetails] = useState();
-
-  axios
-    .get(API_URL)
-    .then(function (response) {
-      // handle success
-      setCartdetails(response.data);
-      console.log(response);
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    });
-
-  console.log(cartdetails);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`/product/cart/${userID}`);
+        setCartDetails(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  }, [userID]);
 
   return (
     <Container>
@@ -190,17 +187,21 @@ const Cart = () => {
           <TopButton type="filled">CHECKOUT NOW</TopButton>
         </Top>
         <Bottom>
-       
-
+          <Info>
+            {cartdetails.items &&
+              cartdetails.items.map((item) => (
+                <Cartitem item={item} key={item.productId} />
+              ))}
+          </Info>
           <Summary>
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>Rs.40650</SummaryItemPrice>
+              <SummaryItemPrice>Rs.{cartdetails.bill}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>
-              <SummaryItemPrice>Rs.500</SummaryItemPrice>
+              <SummaryItemPrice>Rs.200</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Shipping Discount</SummaryItemText>
@@ -208,7 +209,7 @@ const Cart = () => {
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>Rs.40650</SummaryItemPrice>
+              <SummaryItemPrice>Rs.{cartdetails.bill - 500 +200}</SummaryItemPrice>
             </SummaryItem>
             <Button>CHECKOUT NOW</Button>
           </Summary>
