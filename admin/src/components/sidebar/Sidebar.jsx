@@ -52,6 +52,19 @@ export default function Sidebar() {
                 Products
               </li>
             </Link>
+    
+             <Link to="/newUser" className="link">
+              <li className="sidebarListItem">
+                <Storefront className="sidebarIcon" />
+                Add New User
+              </li>
+            </Link>
+            <Link to="/newProduct" className="link">
+              <li className="sidebarListItem">
+                <Storefront className="sidebarIcon" />
+                Add New Product
+              </li>
+            </Link>
         
             <li className="sidebarListItem">
               <BarChart className="sidebarIcon" />
