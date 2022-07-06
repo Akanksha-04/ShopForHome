@@ -18,6 +18,9 @@ export default function Topbar() {
             <span className="topIconBadge">2</span>
           </div>
           <div className="topbarIconContainer">
+            LOGOUT
+          </div>
+          <div className="topbarIconContainer">
             <Language />
             <span className="topIconBadge">2</span>
           </div>
