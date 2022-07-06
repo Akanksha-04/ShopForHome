@@ -11,6 +11,7 @@ app.get('/', (req, res) => {
 
 app.use("/user", proxy("http://localhost:5001"))
 app.use("/product", proxy("http://localhost:5002"))
+app.use("/discount", proxy("http://localhost:5003"))
 
 app.listen(PORT, () => {
     console.log(`Api GateWAy is working on port ${PORT}`)
