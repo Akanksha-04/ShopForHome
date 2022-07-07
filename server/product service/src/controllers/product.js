@@ -10,6 +10,11 @@ const get_products = async (req, res) => {
     res.json(products);
 };
 
+const get_category = async (req, res) => {
+    const products = await Product.find({ category: req.params.category });
+    res.json(products);
+};
+
 // Get a single product 
 const get_product = async (req, res) => {
     const product = await Product.findById(req.params.id);
@@ -26,7 +31,7 @@ const post_product = async (req, res) => {
         category: req.body.category,
         price: req.body.price,
         stock: req.body.stock,
-        img: req.file.filename, 
+        img: req.file.filename,
     }
     Product.create(obj).then(() => {
         res.json({ message: 'Product added successfully' });
@@ -48,6 +53,12 @@ const delete_product = async (req, res) => {
     const product = await Product.findByIdAndDelete({ _id: req.params.id });
     res.json({ success: true, product });
 };
+
+
+const get_stocks = async (req, res) => {
+    const products = await Product.find().sort({ date: -1 });
+    res.json(products);
+}
 
 const bulk_upload = async (req, res) => {
     //file name
@@ -78,4 +89,4 @@ const bulk_upload = async (req, res) => {
 
 
 // Export all functions
-export { get_products, get_product, post_product, update_product, delete_product, bulk_upload };
+export { get_products, get_product, post_product, update_product, delete_product, bulk_upload, get_stocks,get_category };

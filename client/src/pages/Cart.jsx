@@ -172,6 +172,20 @@ const Cart = () => {
     fetchData();
   }, [userID]);
 
+  const orderhandle = (e) => {
+    e.preventDefault();
+    axios
+      .post(`/product/order/${userID}`)
+      .then((res) => {
+        console.log(res);
+        alert("Order Placed Successfully");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log("Order button clicked Placed Successfully");
+  };
+
   return (
     <Container>
       <Navbar />
@@ -186,7 +200,8 @@ const Cart = () => {
           </TopTexts>
           <TopButton type="filled">CHECKOUT NOW</TopButton>
         </Top>
-        <Bottom>
+
+        {cartdetails ? ( <Bottom>
           <Info>
             {cartdetails.items &&
               cartdetails.items.map((item) => (
@@ -209,11 +224,15 @@ const Cart = () => {
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>Rs.{cartdetails.bill - 500 +200}</SummaryItemPrice>
+              <SummaryItemPrice>
+                Rs.{cartdetails.bill - 500 + 200}
+              </SummaryItemPrice>
             </SummaryItem>
-            <Button>CHECKOUT NOW</Button>
+            <Button type="submit" onClick={orderhandle}>
+              ORDER NOW
+            </Button>
           </Summary>
-        </Bottom>
+        </Bottom> ): (<h1>No item</h1>)}
       </Wrapper>
       <Footer />
     </Container>

@@ -1,6 +1,5 @@
-import Order from "../models/order.model";
-import Cart from "../models/cart.model";
-import User from "../models/user.model";
+import Order from "../models/order.js";
+import Cart from "../models/cart.js";
 
 const get_orders = async (req, res) => {
     const userId = req.params.id;
@@ -12,31 +11,20 @@ const get_orders = async (req, res) => {
 const checkout = async (req, res) => {
     try {
         const userId = req.params.id;
-        const { source } = req.body;
         let cart = await Cart.findOne({ userId });
-        let user = await User.findOne({ _id: userId }); // user api to get user details
-        const email = user.email;
-        if (cart) {
-            const charge = await stripe.charges.create({
-                amount: cart.bill,
-                currency: "inr",
-                source: source,
-                receipt_email: email,
-            });
-            if (!charge) throw Error("Payment failed");
-            if (charge) {
-                const order = await Order.create({
-                    userId,
-                    items: cart.items,
-                    bill: cart.bill,
-                });
-                const data = await Cart.findByIdAndDelete({ _id: cart.id });
-                return res.status(201).send(order);
-            }
-        } else {
-            res.status(500).send("You do not have items in cart");
+        if (!cart) {
+            return res.status(404).json({ msg: "Cart not found" });
         }
-    } catch (err) {
+        var order = new Order({
+            userId,
+            items: cart.items,
+            bill: cart.bill,
+        });
+        await order.save();
+        await Cart.deleteOne({ userId });
+        res.json(order);
+    }
+    catch (err) {
         console.log(err);
         res.status(500).send("Something went wrong");
     }

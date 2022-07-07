@@ -16,7 +16,7 @@ const Categories = () => {
   return (
     <Container>
       {categories.map((item) => (
-        <Link to={`/catgorieslist/${item.title}`}>
+        <Link to={`/catgorieslist/${item.categorie}`}>
           <CategoryItem item={item} key={item.id} />
         </Link>
       ))}

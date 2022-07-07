@@ -79,6 +79,7 @@ const Login = () => {
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
         localStorage.setItem("userID", user.email);
+        localStorage.setItem("isAdmin", user.isAdmin);
         navigate("/");
       })
       .catch((err) => {
@@ -100,6 +101,7 @@ const Login = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
           <Input
+            type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}

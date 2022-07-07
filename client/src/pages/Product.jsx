@@ -118,6 +118,7 @@ const Button = styled.button`
 `;
 
 const Product = () => {
+  const [qty, setQty] = useState(1);
   const params = useParams();
   const { userID } = params;
   const [item, setItem] = useState({});
@@ -133,6 +134,23 @@ const Product = () => {
     };
     fetchData();
   }, [userID]);
+
+  const carthandle = (e) => {
+    e.preventDefault();
+    axios
+      .post(`/product/cart/${localStorage.getItem("userID")}`, {
+        productId: item._id,
+        quantity: qty,
+      })
+      .then((res) => {
+        console.log(res);
+        alert("product add to cart");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log("add to cart");
+  };
 
   return (
     <Container>
@@ -166,11 +184,17 @@ const Product = () => {
           </FilterContainer> */}
           <AddContainer>
             <AmountContainer>
-              <Remove />
-              <Amount>1</Amount>
-              <Add />
+              <button onClick={() => setQty(qty - 1)}>
+                <Remove />
+              </button>
+              <Amount>{qty}</Amount>
+              <button onClick={() => setQty(qty + 1)}>
+                <Add />
+              </button>
             </AmountContainer>
-            <Button>ADD TO CART</Button>
+            <Button type="submit" onClick={carthandle}>
+              ADD TO CART
+            </Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>

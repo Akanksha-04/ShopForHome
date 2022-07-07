@@ -3,6 +3,7 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import productRouter from "./routes/product.js";
 import cartRouter from "./routes/cart.js";
+import orderRouter from "./routes/order.js";
 import path from "path";
 
 const app = express();
@@ -21,7 +22,7 @@ app.get('./uploads', express.static(path.join(process.cwd(), '/uploads')));
 
 app.use(productRouter)
 app.use(cartRouter)
-// app.use(orderRouter)
+app.use(orderRouter)
 
 app.get("/", (req, res) => {
   res.send("ShopForHome Produce Service");

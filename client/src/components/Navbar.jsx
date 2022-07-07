@@ -10,6 +10,7 @@ import styled from "styled-components";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 // here we are creating our own styled components and for that we have to install a library using command "npm i styled-components"
 const Container = styled.div`
@@ -89,16 +90,33 @@ const Button = styled.button`
   padding: 15px 20px;
   background-color: white;
   border-radius: 5px;
+  cursor: pointer;
 `;
 
 const Navbar = () => {
+  let navigate = useNavigate();
+  const userID = localStorage.getItem("userID");
+
+  const searchhandle = (e) => {
+    console.log(e.target.value);
+
+    navigate(`/catgorieslist/${e.target.value}`);
+  };
+
+  const logouthandle = (e) => {
+    localStorage.clear();
+    e.preventDefault();
+    alert("logout");
+    navigate("/");
+  }
+
   return (
     /* style container/component in place of div */
     <Container>
       <Wrapper>
         <Left>
           <Language>EN</Language>
-          <SearchContainer>
+          <SearchContainer onBlur={searchhandle}>
             <Input placeholder="Search" />
             <Search style={{ color: "gray", fontSize: 16 }} />
           </SearchContainer>
@@ -116,28 +134,28 @@ const Navbar = () => {
               </Badge>
             </MenuItem>
           </Link>
-          <LogoutHidden>
-            <MenuItem>
-              <Button>
-                <FavoriteBorder />
-              </Button>
-            </MenuItem>
-            <MenuItem>
-              <Button>ORDERS</Button>
-            </MenuItem>
-            <MenuItem>
-              <Button>LOG OUT</Button>
-            </MenuItem>
-          </LogoutHidden>
-          <LoginHidden>
-            <Link to="/register">
-              <MenuItem>REGISTER</MenuItem>
-            </Link>
-            <Link to="/login">
-              <MenuItem>SIGN IN</MenuItem>
-            </Link>
-          </LoginHidden>
-          )
+          {userID ? (
+            <LogoutHidden>
+              <MenuItem>
+                <Button>wishlist</Button>
+              </MenuItem>
+              <MenuItem>
+                <Button>ORDERS</Button>
+              </MenuItem>
+              <MenuItem>
+                <Button onClick={logouthandle}>LOG OUT</Button>
+              </MenuItem>
+            </LogoutHidden>
+          ) : (
+            <LoginHidden>
+              <Link to="/register">
+                <MenuItem>REGISTER</MenuItem>
+              </Link>
+              <Link to="/login">
+                <MenuItem>SIGN IN</MenuItem>
+              </Link>
+            </LoginHidden>
+          )}
         </Right>
       </Wrapper>
     </Container>

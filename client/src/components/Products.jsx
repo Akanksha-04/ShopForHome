@@ -15,25 +15,40 @@ const Container = styled.div`
 
 const Products = () => {
   const [items, setitems] = useState();
+  const params = useParams();
+  const { CategorieID } = params;
 
   useEffect(() => {
-  axios
-    .get("/product/all")
-    .then((res) => {
-      setitems(res.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    if (CategorieID) {
+      console.log(CategorieID);
+      axios
+        .get(`/product/all/${CategorieID}`)
+        .then((res) => {
+          setitems(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      axios
+        .get("/product/all")
+        .then((res) => {
+          setitems(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }, []);
 
   return (
     <Container>
-      {items &&  items.map((item) => (
-        <Link to={`/product/${item._id}`}>
-          <Product item={item} key={item.id} />
-        </Link>
-      ))}
+      {items &&
+        items.map((item) => (
+          <Link to={`/product/${item._id}`}>
+            <Product item={item} key={item.id} />
+          </Link>
+        ))}
     </Container>
   );
 };
